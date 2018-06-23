@@ -59,10 +59,15 @@ function createSlackJson(docbase, action) {
       break;
   }
 
-  json['attachments'] = [{
-    color: '#2095C6',
-    text: extractMessageText(docbase.message),
-  }];
+  let confidential = hasConfidential(docbase.tags);
+  console.debug('confidential:', confidential);
+
+  if (!confidential) {
+    json['attachments'] = [{
+      color: '#2095C6',
+      text: extractMessageText(docbase.message),
+    }];
+  }
 
   return json;
 }
@@ -77,6 +82,13 @@ function extractDocBaseTeam(post_url) {
   }
 
   return match[1];
+}
+
+function hasConfidential(tags) {
+  console.debug('tags:', tags);
+  return tags.some(item => {
+    return item.name === 'secret' || item.name === 'confidential' || item.name === '秘密'
+  });
 }
 
 function extractMessageText(message) {
