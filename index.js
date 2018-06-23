@@ -10,14 +10,6 @@ if (!slack_webhook_url) {
   process.exit(1);
 }
 
-const docbase_team = process.env.DOCBASE_TEAM;
-console.debug('docbase_team: ', docbase_team);
-
-if (!docbase_team) {
-  console.error('DOCBASE_TEAM is not defined.');
-  process.exit(1);
-}
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,12 +42,12 @@ function createSlackJson(docbase, action) {
     icon_url: 'https://docbase.io/logo.png',
   };
 
-  let sender_name = docbase.sender.name;
-  let sender_id = docbase.sender.id;
-  let sender_url = `https://${docbase_team}.docbase.io/users/${sender_id}`;
-
   let post_title = docbase.post.title;
   let post_url = docbase.post.url;
+
+  let sender_name = docbase.sender.name;
+  let sender_id = docbase.sender.id;
+  let sender_url = `https://${extractDocBaseTeam(post_url)}.docbase.io/users/${sender_id}`;
 
   switch (action) {
     case 'post_publish':
@@ -75,12 +67,24 @@ function createSlackJson(docbase, action) {
   return json;
 }
 
+function extractDocBaseTeam(post_url) {
+  let pattern = /^https:\/\/([^\.]+)\.docbase\.io/
+  let match = post_url.match(pattern);
+
+  if (!match) {
+    console.error('Extranct post_url was failed.');
+    return '';
+  }
+
+  return match[1];
+}
+
 function extractMessageText(message) {
   let pattern = /(^[^\n]+\n)([^\n]+\n)([\s\S]+$)/;
   let match = message.match(pattern);
 
   if (!match) {
-    console.debug('Extract message was failed.')
+    console.error('Extract message was failed.');
     return '';
   }
 
