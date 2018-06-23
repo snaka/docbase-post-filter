@@ -87,7 +87,7 @@ function extractDocBaseTeam(post_url) {
 function hasConfidential(tags) {
   console.debug('tags:', tags);
   return tags.some(item => {
-    return item.name === 'secret' || item.name === 'confidential' || item.name === '秘密'
+    return item.name.toLowerCase() === 'secret' || item.name.toLowerCase() === 'confidential' || item.name === '秘密'
   });
 }
 
