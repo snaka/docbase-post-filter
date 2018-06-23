@@ -59,7 +59,7 @@ function createSlackJson(docbase, action) {
       break;
   }
 
-  let confidential = hasConfidential(docbase.tags);
+  let confidential = hasConfidential(docbase.post.tags);
   console.debug('confidential:', confidential);
 
   if (!confidential) {
