@@ -38,7 +38,7 @@ app.listen(process.env.PORT || 8080);
 
 function createSlackJson(docbase, action) {
   let json = {
-    user_name: 'DocBase',
+    username: 'DocBase',
     icon_url: 'https://docbase.io/logo.png',
   };
 
