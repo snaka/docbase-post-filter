@@ -19,12 +19,16 @@ DocBase の WebHook を Slack の Incoming WebHook に中継するWebアプリ�
 
 ## 使い方
 
-このアプリが動作するためには環境変数 `SLACK_WEBHOOK_URL` にSlackのIncoming WebHook のURLを設定しておく必要がある。　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+あらかじめ Slack で Incoming WebHook の設定を行い URL を取得しておく。
 
-hereoku へデプロイする場合の例
+その後、以下のボタンを押して heroku にWebアプリケーションをデプロイする。（デプロイ時に WebHook のURLを聞かれるので先に取得しておいた Slack の WebHook の URL を設定する）
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+あるいは、以下のように手動でデプロイ（`SLACK_WEBHOOK_URL` にはあらかじめ取得しておいたSlackの WebHook URL を設定する）
 
 ```
-$ heroku config:set SLACK_WEBHOOK_URL=https://hooks.slack.com/services/xxxxxxxxx/zzzzzzzzzzzzzzzz
+$ heroku create
+$ heroku config:set SLACK_WEBHOOK_URL=https://hooks.slack.com/services/xxxxxxxxxxxxxxxxx
+$ git push heroku master
 ```
-
-

@@ -1,0 +1,12 @@
+{
+  "name": "docbase-post-filter",
+  "description": "DocBase でメモの登録/更新を Slack へ投稿しますが、secret など特定のタグが含まれるメモの本文は Slack には投稿されません。",
+  "repository": "https://github.com/snaka/docbase-post-filter",
+  "keywords": ["node", "docbase", "slack"],
+  "env": {
+    "SLACK_WEBHOOK_URL": {
+      "description": "Slack の Incoming WebHook のURLを設定します",
+      "required": true
+    }
+  }
+}
